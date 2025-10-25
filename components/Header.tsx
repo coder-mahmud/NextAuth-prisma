@@ -1,7 +1,11 @@
 import React from 'react'
 import Link from 'next/link'
+import { auth } from '@/auth'
+import UserButton from './userButton'
 
-const Header = () => {
+const Header = async () => {
+  const session = await auth()
+  console.log("Session from header:", session)
   return (
     <>
       <header className='min-h-24 flex justify-between items-center max-w-[1240px] w-full mx-auto'>
@@ -17,7 +21,7 @@ const Header = () => {
           </ul>
         </div>
         <div>
-          <Link href="/">Login</Link>
+          <UserButton />
         </div>
       </header>
     </>

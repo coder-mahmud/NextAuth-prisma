@@ -1,6 +1,9 @@
 "use server";
 import { db } from "@/lib/db";
 import { hashSync } from "bcrypt-ts-edge";
+import { isRedirectError } from "next/dist/client/components/redirect-error";
+import { signIn, signOut } from "@/auth";
+import { redirect } from "next/navigation";
 
 // Define the shape of the input
 interface CreateUserInput {
@@ -30,4 +33,39 @@ export async function createUser(input: CreateUserInput) {
     console.error("user creation error:", error);
     throw new Error("Failed to create user");
   }
+}
+
+
+// Sign in user with creds
+export async function signInWithCredentirals(prevState: unknown, formData: FormData){
+
+  try {
+    const user = {
+      email: formData.get('email'), 
+      password: formData.get('password'),
+      // redirect: false,
+    };
+
+    const signin = await signIn('credentials', user)
+    console.log("signin response:",signin)
+
+    return {success: true, message:"Signed in successfully"}
+    // redirect("/profile");
+
+
+  } catch (err) {
+    console.log("signin error:", err)
+    if(isRedirectError(err)){
+      console.log("redirect error:", err)
+      throw err
+    }
+    
+    return {success: false, message:"Invalid email or password!"}
+  }
+
+}
+
+
+export async function signOutUser(){
+  await signOut();
 }
