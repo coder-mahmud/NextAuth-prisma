@@ -8,7 +8,7 @@ import { redirect } from "next/navigation";
 // Define the shape of the input
 interface CreateUserInput {
   email: string,
-  userName: string,
+  name: string,
   password: string,
   image?: string,
   role?:string
@@ -18,14 +18,14 @@ interface CreateUserInput {
 // Server action to create a user
 export async function createUser(input: CreateUserInput) {
   try {
-    const { email, userName, password } = input;
+    const { email, name, password } = input;
 
     const plainPassword = password
     const hashedPassword = hashSync(password,10)
     
 
     const user = await db.user.create({
-      data: { email, userName, password:hashedPassword },
+      data: { email, name, password:hashedPassword },
     });
 
     return { message: "User created", user };

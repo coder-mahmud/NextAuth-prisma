@@ -12,16 +12,16 @@ export default function UserForm() {
     e.preventDefault();
 
     const email = emailRef.current?.value;
-    const userName = userNameRef.current?.value;
+    const name = userNameRef.current?.value;
     const password = passwordRef.current?.value;
 
-    if (!email || !userName || !password) {
+    if (!email || !name || !password) {
       alert("Please fill all fields");
       return;
     }
 
     try {
-      const response = await createUser({ email, userName, password });
+      const response = await createUser({ email, name, password });
       console.log("Created User:", response)
       alert(`User created with : ${response.user.userName}`);
     } catch (err: any) {

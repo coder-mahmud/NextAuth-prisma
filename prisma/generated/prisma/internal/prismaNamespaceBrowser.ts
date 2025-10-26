@@ -62,12 +62,14 @@ export type ModelName = (typeof ModelName)[keyof typeof ModelName]
 
 export const UserScalarFieldEnum = {
   id: 'id',
-  userName: 'userName',
+  name: 'name',
   email: 'email',
   emailVerified: 'emailVerified',
   image: 'image',
   password: 'password',
   role: 'role',
+  provider: 'provider',
+  providerId: 'providerId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

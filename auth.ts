@@ -1,6 +1,6 @@
 import NextAuth from "next-auth"
 import Google from "next-auth/providers/google"
-// import GoogleProvider from "next-auth/providers/google";
+import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@auth/prisma-adapter"
 // import { PrismaClient } from "./prisma/generated/prisma/client"
 import CredentialsProvider from "next-auth/providers/credentials";
@@ -32,7 +32,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
           if(isMatch){
             return {
               id: user.id,
-              name: user.userName,
+              name: user.name,
               email: user.email,
               role: user.role,
             }
@@ -45,10 +45,10 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         }
 
     }),  
-    // GoogleProvider({
-    //   clientId: process.env.GOOGLE_CLIENT_ID,
-    //   clientSecret: process.env.GOOGLE_CLIENT_SECRET
-    // })
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET
+    })
   ],
   session: {
     strategy: "jwt",
@@ -100,8 +100,8 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         await db.user.update({
           where: { id: user.id },
           data: {
-            // provider: "google",
-            // providerId: account.providerAccountId,
+            provider: "google",
+            providerId: account.providerAccountId,
           },
         });
       }
@@ -112,8 +112,8 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         await db.user.update({
           where: { id: user.id },
           data: {
-            // provider: "google",
-            // providerId: account.providerAccountId,
+            provider: "google",
+            providerId: account.providerAccountId,
           },
         });
       }

@@ -16,24 +16,26 @@ datasource db {
 
 model User {
   id            String    @id @default(auto()) @map("_id") @db.ObjectId
-  userName      String?
+  name          String?
   email         String?   @unique
   emailVerified DateTime?
   image         String?
   password      String?
   role          String    @default("user")
-  accounts      Account[]
-  sessions      Session[]
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  provider      String?
+  providerId    String?
+  accounts  Account[]
+  sessions  Session[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
 
 model Account {
   id                String  @id @default(auto()) @map("_id") @db.ObjectId
   userId            String  @db.ObjectId
   type              String
-  provider          String
-  providerAccountId String
+  provider          String?
+  providerAccountId String?
   refresh_token     String? @db.String
   access_token      String? @db.String
   expires_at        Int?
